@@ -208,19 +208,4 @@ while run:
 #page 119 de mon doc
 
 pygame.Surface.get_at(fenetre,(10,10))
-#get_at()
-#get the color value at a single pixel
-#get_at((x, y)) -> Color
-#Return a copy of the RGBA Color value at the given pixel. If the Surface has no per pixel alpha, then the alpha value will always be 255 (opaque). If the pixel position is outside the area of the Surface an IndexError exception will be raised.
-#Getting and setting pixels one at a time is generally too slow to be used in a game or realtime situation. It is better to use methods which operate on many pixels at a time like with the blit, fill and draw methods - or by using pygame.surfarraypygame module for accessing surface pixel data using array interfaces/pygame.PixelArraypygame object for direct pixel access of surfaces.
-#This function will temporarily lock and unlock the Surface as needed.
-#New in pygame 1.9: Returning a Color instead of tuple. Use tuple(surf.get_at((x,y))) if you want a tuple, and not a Color. This should only matter if you want to use the color as a key in a dict.
 
-
-#set_at()
-#set the color value for a single pixel
-#set_at((x, y), Color) -> None
-#Set the RGBA or mapped integer color value for a single pixel. If the Surface does not have per pixel alphas, the alpha value is ignored. Setting pixels outside the Surface area or outside the Surface clipping will have no effect.
-#Getting and setting pixels one at a time is generally too slow to be used in a game or realtime situation.
-#This function will temporarily lock and unlock the Surface as needed.
-#Note If the surface is palettized, the pixel color will be set to the most similar color in the palette.
