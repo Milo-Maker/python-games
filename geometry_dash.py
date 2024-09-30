@@ -24,21 +24,30 @@ run=True
 # jeu
 yjoueur=630
 vitesse_y=0
-gravité=-0.02
-puissance_du_saut=3             
 chute=0
 deffilx=0
-position_spike=[
-[1000,700],
-[1050,700],
-[1100,700]
+O=1
+I=2
+map=[
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,O,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,O,0,0,0,0,0,0,O,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,I,0,0,0,0,0,0,0,0,0,I,O,I,I,I,I,I,I,I,0,0,0,0,0,0,0]
 ]
-position_block=[
-[1600,630],
-[1600,560],
-[1600,320],
-[1700,630]  
-]
+position_spike=[]
+position_block=[]
+for i in range(len(map)):
+    for j in range(len(map[0])):
+        if map[i][j]==1:
+            position_block.append([j*70,i*70])
+        if map[i][j]==2:
+            position_spike.append([j*70,i*70+70])
 
 # autre
 cycle_lumi=1
@@ -59,14 +68,13 @@ def menu(col_ecriture):
 def draw_spikes(fenetre):
     global position_spike,deffilx
     for i in range (len(position_spike)):
-        pygame.draw.polygon(fenetre,noire_mort,[(position_spike[i][0]-deffilx,position_spike[i][1]),(position_spike[i][0]+50-deffilx,position_spike[i][1]),(position_spike[i][0]+25-deffilx,position_spike[i][1]-50)])
+        pygame.draw.polygon(fenetre,noire_mort,[(position_spike[i][0]-deffilx,position_spike[i][1]),(position_spike[i][0]+70-deffilx,position_spike[i][1]),(position_spike[i][0]+35-deffilx,position_spike[i][1]-70)])
         
 def draw_block(fenetre):
     global position_block,deffilx
     for i in range (len(position_block)):
         pygame.draw.rect(fenetre,noire,(position_block[i][0]-deffilx,position_block[i][1],70,70))
         pygame.draw.rect(fenetre,noire_mort,(position_block[i][0]-deffilx,position_block[i][1]+1,2,69))
-#        pygame.draw.polygon(fenetre,noire_mort,[(position_block[i][0]-deffilx,position_block[i][1]),(position_block[i][0]+50-deffilx,position_spike[i][1]),(position_spike[i][0]+25-deffilx,position_spike[i][1]-50)])
 
 
 def verification_collision_saut():
@@ -84,11 +92,11 @@ def verification_collision_saut():
                 yjoueur=derniere_valeur
 
 def jeu():
-    global run,puissance_du_saut,yjoueur,chute,gravité,vitesse_y,deffilx,text_police
+    global run,yjoueur,chute,vitesse_y,deffilx,text_police
     yjoueur=630
     vitesse_y=0
-    gravité=-0.02
-    puissance_du_saut=3.1             
+    gravité=-0.017
+    puissance_du_saut=3.3        
     chute=0
     deffilx=0
     fenetre.fill(rouge)
@@ -169,8 +177,8 @@ class sol(pygame.sprite.Sprite):
 
 class block(pygame.sprite.Sprite):
     def __init__(self,x,y):
-        self.image=pygame.Surface((70,70))
-        self.image2=pygame.Surface((5,69))
+        self.image=pygame.Surface((50,50))
+        self.image2=pygame.Surface((5,49))
         self.image2.fill(noire_mort)
         self.image.fill(noire)
         self.rect=self.image.get_rect(x=x,y=y)
@@ -200,12 +208,6 @@ while run:
         if event.type == pygame.KEYDOWN :
             if event.key == pygame.K_SPACE:
                 jeu()
-    
-
-    #pygame.Surface.get_at(10,10)
     pygame.display.flip()
 
-#page 119 de mon doc
-
-pygame.Surface.get_at(fenetre,(10,10))
 
